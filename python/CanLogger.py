@@ -2,10 +2,15 @@
 
 import os
 import sys
-import time
-import mhsTinyCanDriver as CanDriver
-from baseOptionParser import BaseOptionParser
+sys.path.append("tiny_can_driver")
 
+import time
+import tiny_can_driver.mhsTinyCanDriver as CanDriver
+from baseOptionParser import BaseOptionParser
+#import uselogging
+
+from datetime import datetime
+from os.path import exists
 
 log_file_name = None
 data_file_name = None
@@ -15,7 +20,7 @@ data_file_name = None
 def log(msg):
     with open(log_file_name,"a") as log_file:
         event_msg=timestamp()+": event = "+ str(msg)+"\n"
-        print(event)
+        print(event_msg)
         log_file.write(event_msg)
 
 
@@ -29,7 +34,7 @@ def timestamp(format_=None):
      return time
 
 
-def createNewFilename(name,ending):
+def create_new_filename(name,ending):
     fileNumber=0
     while(exists(name+"_"+str(fileNumber)+"."+ending)):
         fileNumber+=1
