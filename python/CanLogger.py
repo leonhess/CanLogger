@@ -25,6 +25,17 @@ def createNewFilename(name,ending):
         fileNumber+=1
     return name+"_"+str(fileNumber)+"."+ending
 
+def connect(baudrate, snr=None, attemps=5):
+    current_attempt=0
+    while(current_attempt<attemps):
+        status = can_driver.OpenComplete(canSpeed=baudrate, snr=snr)
+
+        #if status is None no error 
+        if status:
+            current_attempt+=1
+        else:
+            return 1
+    return -1
 
 
 #######################################################################
@@ -36,11 +47,16 @@ def createNewFilename(name,ending):
 #settings for can bus
 baudrate=1000
 snr=None
+reconnect_attemps=10
 
 
 #initalize CanDriver
-canDriver=CanDriver.MhsTinyCanDriver()
+can_driver=CanDriver.MhsTinyCanDriver()
 
 #open the can initerface
+status = connect(baudrate, snr=snr, attemps=reconnect_attemps)
+if status < 0:
+    #if the result of the connect function is negative a errer has occured
+    sys.exit(status)
 
 
