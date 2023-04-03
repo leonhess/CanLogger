@@ -56,6 +56,49 @@ def connect(baudrate, snr=None, attempts=5):
 
 #######################################################################
 #######################################################################
+#####tiny_can_lib Callbacks############################################
+#######################################################################
+def PnPEventCallback(index, status):
+    if status:
+        canDriver.canDeviceOpen(index)
+        canDriver.startCanBus(index)
+        log("[Device connected]")
+    else:
+        log("[Device Disconnected]")
+        log("[reconnecting...]")
+        connect(baudrate)
+
+
+def StatusEventCallback(index,deviceStatusPointer):
+    deviceStatus = deviceStatusPointer.contents
+    log(canDriver.FormatCanDeviceStatus(deviceStatus, deviceStatus.CanStatus, deviceStatus.FIfoStatus))
+
+
+def RxEventCallback(index, DummyPointer, count):
+    log("RxEvent Index{0}".format(index))
+    res = canDriver.CanReceive(count = 500)
+    
+    if res[0]>0:       
+        msgs = canDriver.FormatMessages(res[1])
+        dataArray=[]
+        for msg in msgs:
+            string=formatMessage(msg)
+            dataArray.append(string)
+        saveMessageArray(dataArray)
+    else:
+        if res[0] < 0:
+            log(canDriver.FormatError(res, 'CanReceive'))
+            #return -1
+    #return 0
+
+
+
+
+
+
+
+#######################################################################
+#######################################################################
 #####start#############################################################
 #######################################################################
 
