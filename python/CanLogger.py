@@ -136,6 +136,9 @@ snr=None
 reconnect_attemps=10
 
 #logging and date files
+if not exists(dynamic_file_path):
+    mkdir(dynamic_file_path)
+
 start_time=timestamp("file")
 
 
