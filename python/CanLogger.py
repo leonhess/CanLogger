@@ -6,6 +6,12 @@ import time
 import mhsTinyCanDriver as CanDriver
 from baseOptionParser import BaseOptionParser
 
+
+log_file_name = None
+data_file_name = None
+
+
+
 def log(msg):
     with open(log_file_name,"a") as log_file:
         event_msg=timestamp()+": event = "+ str(msg)+"\n"
@@ -32,7 +38,7 @@ def createNewFilename(name,ending):
 
 def connect(baudrate, snr=None, attemps=5):
     current_attempt=0
-    while(current_attempt<attemps):
+    while(current_attempt<attempts):
         status = can_driver.OpenComplete(canSpeed=baudrate, snr=snr)
 
         #if status is None no error 
@@ -53,6 +59,16 @@ def connect(baudrate, snr=None, attemps=5):
 baudrate=1000
 snr=None
 reconnect_attemps=10
+
+#logging and date files
+start_time=timestamp("file")
+
+
+log_file_name=create_new_filename(start_time+"_LOG","txt")
+data_file_name=create_new_filename(start_time+"_data","txt")
+
+log("[START]")
+
 
 
 #initalize CanDriver
