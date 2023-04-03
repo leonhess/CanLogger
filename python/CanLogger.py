@@ -6,7 +6,11 @@ import time
 import mhsTinyCanDriver as CanDriver
 from baseOptionParser import BaseOptionParser
 
-
+def log(msg):
+    with open(log_file_name,"a") as log_file:
+        event_msg=timestamp()+": event = "+ str(msg)+"\n"
+        print(event)
+        log_file.write(event_msg)
 
 
 def timestamp(format_=None):
@@ -24,6 +28,7 @@ def createNewFilename(name,ending):
     while(exists(name+"_"+str(fileNumber)+"."+ending)):
         fileNumber+=1
     return name+"_"+str(fileNumber)+"."+ending
+
 
 def connect(baudrate, snr=None, attemps=5):
     current_attempt=0
