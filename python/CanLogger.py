@@ -54,6 +54,33 @@ def connect(baudrate, snr=None, attempts=5):
     return -1
 
 
+
+#######################################################################
+#######################################################################
+#####data formatting###################################################
+#######################################################################
+
+def formatMessage(message):
+    time=timestamp()
+    message = message.split("   ")
+    info = message[0].split(" ")
+    direction = info[0]
+    ID = info[1]
+    type_ = info[2]
+    data=message[1].strip(" ")
+    dlc=data[0]
+    payload=data[1:].replace(" ","")
+    
+    string = time+";"+ID+";"+direction+";"+type_+";"+dlc+";"+payload+"\n"
+    return string
+
+
+def saveMessageArray(stringArray):
+    with open(dataFileName,"a") as loggingFile:
+        for line in stringArray:
+            loggingFile.write(line)
+
+
 #######################################################################
 #######################################################################
 #####tiny_can_lib Callbacks############################################
