@@ -161,6 +161,16 @@ can_driver.CanSetUpEvents(PnPEventCallbackfunc=PnPEventCallback,
                           RxEventCallbackfunc=RxEventCallback)
 log("callbacks registered")
 
+try:
+    while True:
+        time.sleep(0.100)
+except KeyboardInterrupt:
+    log("[KeyboardInterrupt]")
+
+can_driver.CanSetEvents(0)
+time.sleep(0.5)
+can_driver.so=None
+log("[DONE]")
 
 
 
