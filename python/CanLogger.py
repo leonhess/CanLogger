@@ -85,4 +85,14 @@ if status < 0:
     #if the result of the connect function is negative a errer has occured
     sys.exit(status)
 
+#register callbacks
+can_driver.CanSetUpEvents(PnPEventCallbackfunc=PnPEventCallback,
+                          StatusEventCallbackfunc=StatusEventCallback,
+                          RxEventCallbackfunc=RxEventCallback)
+log("callbacks registered")
+
+
+
+
+
 
