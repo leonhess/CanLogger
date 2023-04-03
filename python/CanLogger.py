@@ -15,11 +15,11 @@ def log(msg):
 
 def timestamp(format_=None):
      time = datetime.now()
-     match format_:
-         case "file":
-            time=time.strftime("%Y%m%d_%H%M%S")
-         case others:
-            time=time.strftime("%H:%M:%S:%f")
+     if format_=="file":
+        time=time.strftime("%Y%m%d_%H%M%S")
+     else:
+        time=time.strftime("%H:%M:%S:%f")
+     
      return time
 
 
