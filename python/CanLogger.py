@@ -14,7 +14,7 @@ from os.path import exists
 
 log_file_name = None
 data_file_name = None
-
+dynamic_file_path="files/"
 
 
 def log(msg):
@@ -41,7 +41,7 @@ def create_new_filename(name,ending):
     return name+"_"+str(fileNumber)+"."+ending
 
 
-def connect(baudrate, snr=None, attemps=5):
+def connect(baudrate, snr=None, attempts=5):
     current_attempt=0
     while(current_attempt<attempts):
         status = can_driver.OpenComplete(canSpeed=baudrate, snr=snr)
@@ -69,8 +69,8 @@ reconnect_attemps=10
 start_time=timestamp("file")
 
 
-log_file_name=create_new_filename(start_time+"_LOG","txt")
-data_file_name=create_new_filename(start_time+"_data","txt")
+log_file_name=create_new_filename(dynamic_file_path+start_time+"_LOG","txt")
+data_file_name=create_new_filename(dynamic_file_path+"start_time"+"_DATA","txt")
 
 log("[START]")
 
@@ -80,7 +80,7 @@ log("[START]")
 can_driver=CanDriver.MhsTinyCanDriver()
 
 #open the can initerface
-status = connect(baudrate, snr=snr, attemps=reconnect_attemps)
+status = connect(baudrate, snr=snr, attempts=reconnect_attemps)
 if status < 0:
     #if the result of the connect function is negative a errer has occured
     sys.exit(status)
