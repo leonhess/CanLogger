@@ -70,7 +70,6 @@ for dbc_line in dbc_file.split("\n"):
                 "maxima" : signal_data[6],
                 "unit" : signal_data[7],
                 "extra_info" : signal_data[8]
-                
                 }
 
         current_signal_name = signal_data[-2]
@@ -87,10 +86,14 @@ for dbc_line in dbc_file.split("\n"):
         current_frame = None
         current_frame_id = None
         frame_counter += 1
+
+
 print("{} blocks have been read, with {} signals".format(frame_counter,signal_counter))
-
-
 print(frames)
+
+
+
+
 
 
 
