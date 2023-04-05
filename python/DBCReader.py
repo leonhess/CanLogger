@@ -6,7 +6,7 @@ import re
 with open("CANoe_C23.dbc","r") as dbc_handle:
     dbc_file = dbc_handle.read()
 
-dataFile = open("testlogging.txt","r")
+log_file = open("log2.txt","r")
 
 
 
@@ -58,7 +58,6 @@ for dbc_line in dbc_file.split("\n"):
         formatString = re.sub("\+ ",",",formatString)
         formatString = re.sub(" ",",", formatString)
         signal_data = formatString.split(",")
-        print(signal_data)
 
         signal = {
                 "start_bit" : signal_data[0],
@@ -89,7 +88,25 @@ for dbc_line in dbc_file.split("\n"):
 
 
 print("{} blocks have been read, with {} signals".format(frame_counter,signal_counter))
-print(frames)
+
+
+for line_number, logfile_line in enumerate(log_file):
+    print(logfile_line)
+    logfile_line = re.sub("\n","",str(logfile_line))
+    log_data = logfile_line.split(";")
+    print(log_data)
+      #read in the information of the logged msg
+    timestamp= log_data[0]
+    canID = log_data[1].lstrip("0")
+    direction = log_data[2]
+    msg_type = log_data[3] 
+    dlc = log_data[4]
+    data = log_data[5]
+   
+    frame= frames.get(str(canID))
+    print(frame)
+   
+
 
 
 
