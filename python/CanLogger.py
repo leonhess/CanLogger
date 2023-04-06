@@ -113,6 +113,9 @@ def RxEventCallback(index, DummyPointer, count):
             string=formatMessage(msg)
             dataArray.append(string)
         saveMessageArray(dataArray)
+        for s in dataArray:
+            m = s.split(";")
+            print(m[1])
     else:
         if res[0] < 0:
             log(canDriver.FormatError(res, 'CanReceive'))
