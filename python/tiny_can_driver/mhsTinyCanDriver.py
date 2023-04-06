@@ -453,7 +453,6 @@ class MhsTinyCanDriver:
         else:                        
             for sharedLibraryLocation in sharedLibraryLocations:
                 try:
-                    print(sharedLibraryLocation)
                     if sys.platform == "win32":
                         sharedLibrary = sharedLibraryLocation + os.sep + "mhstcan.dll"
                     else:
@@ -465,7 +464,6 @@ class MhsTinyCanDriver:
                         self.so = CDLL(sharedLibrary)                    
                     self.logger.info('library found')
                     break
-                    print(self.so)
                 except OSError:
                     self.logger.error('no valid library found')
                     pass
@@ -492,7 +490,6 @@ class MhsTinyCanDriver:
         @param can_bitrate: Bitrate / CAN Speed to be set       
         @return: Error Code (0 = No Error)
         """
-        print("openComplete")
         if index == None:
             index = self.DefaultIndex                  
         if options and (type(options) == dict):
@@ -504,7 +501,6 @@ class MhsTinyCanDriver:
         if canSpeed:
             UpdateOptionDict(self.Options,{'CanSpeed1':canSpeed},self.logger)
         err = self.openDevice(index, options=self.Options)
-        print(err)
         if err >= 0:
             err = self.startCanBus(index=index, listenOnly=listenOnly)
         if err >= 0:
@@ -552,7 +548,6 @@ class MhsTinyCanDriver:
         @author: Patrick Menschel (menschel.p@posteo.de)
         @todo: Handle Exception if Serial Number is given but device is not found Handle in OPENDEVICE
         """
-        print("openDevice")
         if index == None:
             index = self.DefaultIndex
         if options and (type(options) == dict):
@@ -561,12 +556,9 @@ class MhsTinyCanDriver:
             options.update({'snr':serial})
             UpdateOptionDict(self.Options,{'snr':serial},self.logger)                                 
         err = self.CanDeviceClose(index)
-        print("err")
-        print(err)
         if err < 0:
             self.logger.error('CanDeviceClose prior to CanDeviceOpen Error-Code: {0}'.format(err))          
         err = self.CanDeviceOpen(index, OptionDict2CsvString(OptionDict=options,Keys=TCAN_Keys_CanDeviceOpen))
-        print(err)
         if err < 0:
             self.logger.error('openDevice Error-Code: {0}'.format(err))
         self.TCDeviceProperties.update(CsvString2OptionDict(self.CanDrvHwInfo(index)))
@@ -659,10 +651,6 @@ class MhsTinyCanDriver:
         formatedMessages = []
         if messages:
             for message in messages:
-                print("MESSAGE-------------------------------")
-                print(message)
-                print(message.Data)
-                print(message.Data[0])
                 if message.Flags.FlagBits.RTR and message.Flags.FlagBits.EFF:
                     frame_format = 'EFF/RTR'
                 else: 
@@ -863,19 +851,14 @@ class MhsTinyCanDriver:
         @param options: Option String - ByteString in Python3
         @return: Error Code (0 = No Error) 
         """
-        print("openDevice")
         if type(index) == TIndex:
             idx = index.Uint32
         else:
             idx = index
-        print("idx")
-        print(idx)
         self.so.CanDeviceOpen.restype = c_int32    
         err = self.so.CanDeviceOpen(c_uint32(idx), c_char_p(options))
-        print(str(err))
         if err < 0:
             self.logger.error('CanDeviceOpen Error-Code: {0}'.format(err))
-            print("test1")
         return err
         
     def CanDeviceClose(self, index=None):

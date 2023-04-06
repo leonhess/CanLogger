@@ -17,10 +17,11 @@ data_file_name = None
 dynamic_file_path="files/"
 
 
-def log(msg):
+def log(msg, f_print=0):
     with open(log_file_name,"a") as log_file:
         event_msg=timestamp()+": event = "+ str(msg)+"\n"
-        print(event_msg)
+        if f_print==0:
+            print(event_msg)
         log_file.write(event_msg)
 
 
@@ -98,11 +99,11 @@ def PnPEventCallback(index, status):
 
 def StatusEventCallback(index,deviceStatusPointer):
     deviceStatus = deviceStatusPointer.contents
-    log(canDriver.FormatCanDeviceStatus(deviceStatus, deviceStatus.CanStatus, deviceStatus.FIfoStatus))
+    #log(can_driver.FormatCanDeviceStatus(deviceStatusPointer, deviceStatusPointer.CanStatus,deviceStatusPointer.FIfoStatus))
 
 
 def RxEventCallback(index, DummyPointer, count):
-    log("RxEvent Index{0}".format(index))
+    #log("RxEvent Index{0}".format(index))
     res = can_driver.CanReceive(count = 500)
     
     if res[0]>0:       
@@ -143,7 +144,7 @@ start_time=timestamp("file")
 
 
 log_file_name=create_new_filename(dynamic_file_path+start_time+"_LOG","txt")
-data_file_name=create_new_filename(dynamic_file_path+"start_time"+"_DATA","txt")
+data_file_name=create_new_filename(dynamic_file_path+start_time+"_DATA","txt")
 
 log("[START]")
 
