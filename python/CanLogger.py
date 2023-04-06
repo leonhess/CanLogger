@@ -75,11 +75,27 @@ def formatMessage(message):
     return string
 
 
-def saveMessageArray(stringArray):
-    with open(data_file_name ,"a") as loggingFile:
-        for line in stringArray:
-            loggingFile.write(line)
+def save_cached_msgs(msgs):
+    data_string=""
+    for msg in msgs:
+        Id = msg
+        msg = msgs.get(msg)
+        data = str(msg.get("data"))
+        time = str( (msg.get("time").get("Sec"))*1000000+msg.get("time").get("USec"))
 
+        diff=str(msg.get("diff")) 
+        #s =["--", Id, dir_, typ, dlc, data,diff ]
+        s =[time, Id, data,diff ]
+        #dlc = msg.get("dlc")
+        for part in s:
+            data_string+=part+";"
+        data_string+="\n"
+
+        #data_string +="--";+Id+";"+dir_+";"+typ+";"
+        #for  in stringArray:
+            
+    with open(data_file_name ,"a") as loggingFile:
+        loggingFile.write(data_string)
 
 #######################################################################
 #######################################################################
@@ -171,7 +187,7 @@ def RxEventCallback(index, DummyPointer, count):
             Id : cached_msg
             })
         
-        #saveMessageArray(dataArray)
+        save_cached_msgs(cached_msgs)
         for s in dataArray:
             m = s.split(";")
             #print(m[1])
