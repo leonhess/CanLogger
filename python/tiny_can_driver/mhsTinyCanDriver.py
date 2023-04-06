@@ -238,24 +238,24 @@ TCAN_Options = {'CanRxDFifoSize':None,
                 'MainThreadPriority':None,
                 'CallThreadPriority':None,
                 'Hardware':None,
-                'CfgFile':None,
+                'CfgFile':None,   #log file name, if "-" no file gets created
                 'Section':None,
                 'LogFile':None,
                 'LogFlags':None,
-                'TimeStampMode':None,
+                'TimeStampMode':4,   #Hardware Timestamps when available, else sw timestamps
                 'CanTxAckEnable':None,
-                'CanSpeed1':None,
+                'CanSpeed1':None,    #can speed in kbit/s
                 'CanSpeed1User':None,
-                'AutoConnect':None,
-                'AutoReopen':None,
+                'AutoConnect':None,    # auto connect off
+                'AutoReopen':1,    #auto reconnect on
                 'MinEventSleepTime':None,
                 'ExecuteCommandTimeout':None,
                 'LowPollIntervall':None,
                 'FilterReadIntervall':None,
                 'ComDrvType':None,
                 'Port':None,
-                'ComDeviceName':None,
-                'BaudRate':None,
+                'ComDeviceName':None,   
+                'BaudRate':None,    #com board baudrade
                 'VendorId':None,
                 'ProductId':None,
                 'Snr':None}

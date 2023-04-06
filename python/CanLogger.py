@@ -94,6 +94,7 @@ def PnPEventCallback(index, status):
     else:
         log("[Device Disconnected]")
         log("[reconnecting...]")
+        time.sleep(0.500)
         connect(baudrate)
 
 
