@@ -106,13 +106,8 @@ compare_msgs= {}
 
 
 
-def update_compare_msg(msg):
+def get_diff_time(msg_Id, msg):
     t_old=None
-    msg.update({
-    "diff":0})
-
-    msg_Id = msg.get("Id")
-
 
     if compare_msgs.get(msg_Id):
         t_old= compare_msgs.get(msg_Id).get("time")
@@ -121,20 +116,24 @@ def update_compare_msg(msg):
         "Sec":0,
         "USec":0}
         compare_msgs.update({
-        msg.get("Id") : msg})
-
+        msg_Id : msg})
+    
     
     compare_msgs[msg_Id]["time"] = msg.get("time")
     compare_msgs[msg_Id]["data"]=msg.get("data")
     compare_msgs[msg_Id]["diff"]=(msg["time"]["Sec"] - t_old["Sec"])*1000000
     compare_msgs[msg_Id]["diff"]+=(msg["time"]["USec"] - t_old["USec"])
-    
+    compare_msgs[msg_Id]["diff"]/=1000
+
+
+    msg["diff"]=compare_msgs.get(msg_Id).get("diff")
+    return msg
 
 
 def RxEventCallback(index, DummyPointer, count):
     #log("RxEvent Index{0}".format(index))
     num_msg, raw_msgs = can_driver.CanReceive(count = 500)
-    
+    cached_msgs={} 
     if num_msg>0:       
         msgs = can_driver.FormatMessages(raw_msgs)
         dataArray=[]
@@ -142,9 +141,7 @@ def RxEventCallback(index, DummyPointer, count):
         for raw_msg in raw_msgs:
             sec = raw_msg.Sec
             usec = raw_msg.USec
-            
             dlc = raw_msg.Flags.FlagBits.DLC
-
 
             data =""
             for i in range(dlc):
@@ -160,15 +157,20 @@ def RxEventCallback(index, DummyPointer, count):
             #string=formatMessage(msg)
             #dataArray.append(string)
 
-            test_msg = {
-            "Id":Id,
+            cached_msg = {
             "data":data,
+            "diff":0,
             "time":{
                 "Sec":sec,
                 "USec":usec}
             }
-            #print(test_msg.get("time"))
-            update_compare_msg(test_msg)
+
+            cached_msg=get_diff_time(Id, cached_msg)
+            
+            cached_msgs.update({
+            Id : cached_msg
+            })
+        
         #saveMessageArray(dataArray)
         for s in dataArray:
             m = s.split(";")
