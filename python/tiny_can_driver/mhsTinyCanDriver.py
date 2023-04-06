@@ -242,7 +242,7 @@ TCAN_Options = {'CanRxDFifoSize':None,
                 'Section':None,
                 'LogFile':None,
                 'LogFlags':None,
-                'TimeStampMode':4,   #Hardware Timestamps when available, else sw timestamps
+                'TimeStampMode':1,   #Hardware Timestamps when available, else sw timestamps
                 'CanTxAckEnable':None,
                 'CanSpeed1':None,    #can speed in kbit/s
                 'CanSpeed1User':None,

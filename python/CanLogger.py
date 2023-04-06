@@ -11,7 +11,6 @@ from baseOptionParser import BaseOptionParser
 
 from datetime import datetime
 from os.path import exists
-
 log_file_name = None
 data_file_name = None
 dynamic_file_path="files/"
@@ -103,7 +102,33 @@ def StatusEventCallback(index,deviceStatusPointer):
     #log(can_driver.FormatCanDeviceStatus(deviceStatusPointer, deviceStatusPointer.CanStatus,deviceStatusPointer.FIfoStatus))
 
 
+compare_msgs= {}
 
+
+
+def update_compare_msg(msg):
+    t_old=None
+    msg.update({
+    "diff":0})
+
+    msg_Id = msg.get("Id")
+
+
+    if compare_msgs.get(msg_Id):
+        t_old= compare_msgs.get(msg_Id).get("time")
+    else:
+        t_old={
+        "Sec":0,
+        "USec":0}
+        compare_msgs.update({
+        msg.get("Id") : msg})
+
+    
+    compare_msgs[msg_Id]["time"] = msg.get("time")
+    compare_msgs[msg_Id]["data"]=msg.get("data")
+    compare_msgs[msg_Id]["diff"]=(msg["time"]["Sec"] - t_old["Sec"])*1000000
+    compare_msgs[msg_Id]["diff"]+=(msg["time"]["USec"] - t_old["USec"])
+    
 
 
 def RxEventCallback(index, DummyPointer, count):
@@ -120,6 +145,7 @@ def RxEventCallback(index, DummyPointer, count):
             
             dlc = raw_msg.Flags.FlagBits.DLC
 
+
             data =""
             for i in range(dlc):
                 d = raw_msg.Data[i]
@@ -130,10 +156,19 @@ def RxEventCallback(index, DummyPointer, count):
                     data+=hexD
 
             Id = hex(raw_msg.Id)[2:]
-            print("- {}--{}.{}   {}".format(Id,sec,usec,data))
+            #print("- {}--{}.{}   {}".format(Id,str(sec),usec,data))
             #string=formatMessage(msg)
             #dataArray.append(string)
 
+            test_msg = {
+            "Id":Id,
+            "data":data,
+            "time":{
+                "Sec":sec,
+                "USec":usec}
+            }
+            #print(test_msg.get("time"))
+            update_compare_msg(test_msg)
         #saveMessageArray(dataArray)
         for s in dataArray:
             m = s.split(";")
@@ -193,6 +228,14 @@ log("callbacks registered")
 try:
     while True:
         time.sleep(0.100)
+        data_string = ""
+        for msg in compare_msgs:
+            m = compare_msgs.get(msg)
+            diff = m.get("diff")
+            data = m.get("data")
+            data_string+="{}:{}  {}\n".format(msg,diff,data)
+        
+        print(data_string)
 except KeyboardInterrupt:
     log("[KeyboardInterrupt]")
 
