@@ -91,10 +91,8 @@ print("{} blocks have been read, with {} signals".format(frame_counter,signal_co
 
 
 for line_number, logfile_line in enumerate(log_file):
-    print(logfile_line)
     logfile_line = re.sub("\n","",str(logfile_line))
     log_data = logfile_line.split(";")
-    print(log_data)
       #read in the information of the logged msg
     timestamp= log_data[0]
     canID = log_data[1].lstrip("0")
@@ -104,14 +102,34 @@ for line_number, logfile_line in enumerate(log_file):
     data = log_data[5]
    
     frame= frames.get(str(canID))
-    print(frame)
+  #  print(frame)
    
 
 
 
 
+def map_data_to_frame(data, frame):
+    decoded_frame = {}
 
 
+    #convert hex data to integer
+    data = int(data,16)
+
+    #iterate through all signals in this frame
+    for signal in frame.get("signals"):
+        mapped_data = map_data_to_signal(data, signal)
+        decoded_signal = {
+                "data" : mapped_data,
+                "unit" : signal.get("unit")
+                }
+
+        decoded_frame.update({
+            signal : decoded_signal})
+print(decoded_frame)
+
+
+def map_data_to_signal(data_int,signal):
+    return 0 
 
 
 
