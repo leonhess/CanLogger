@@ -103,20 +103,41 @@ def StatusEventCallback(index,deviceStatusPointer):
     #log(can_driver.FormatCanDeviceStatus(deviceStatusPointer, deviceStatusPointer.CanStatus,deviceStatusPointer.FIfoStatus))
 
 
+
+
+
 def RxEventCallback(index, DummyPointer, count):
     #log("RxEvent Index{0}".format(index))
-    res = can_driver.CanReceive(count = 500)
+    num_msg, raw_msgs = can_driver.CanReceive(count = 500)
     
-    if res[0]>0:       
-        msgs = can_driver.FormatMessages(res[1])
+    if num_msg>0:       
+        msgs = can_driver.FormatMessages(raw_msgs)
         dataArray=[]
-        for msg in msgs:
-            string=formatMessage(msg)
-            dataArray.append(string)
-        saveMessageArray(dataArray)
+        
+        for raw_msg in raw_msgs:
+            sec = raw_msg.Sec
+            usec = raw_msg.USec
+            
+            dlc = raw_msg.Flags.FlagBits.DLC
+
+            data =""
+            for i in range(dlc):
+                d = raw_msg.Data[i]
+                hexD = hex(d)[2:]
+                if d <16:
+                    data+="0"+hexD
+                else:
+                    data+=hexD
+
+            Id = hex(raw_msg.Id)[2:]
+            print("- {}--{}.{}   {}".format(Id,sec,usec,data))
+            #string=formatMessage(msg)
+            #dataArray.append(string)
+
+        #saveMessageArray(dataArray)
         for s in dataArray:
             m = s.split(";")
-            print(m[1])
+            #print(m[1])
     else:
         if res[0] < 0:
             log(canDriver.FormatError(res, 'CanReceive'))
