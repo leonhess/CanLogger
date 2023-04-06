@@ -80,20 +80,13 @@ def save_cached_msgs(msgs):
     for msg in msgs:
         Id = msg
         msg = msgs.get(msg)
-        data = str(msg.get("data"))
-        time = str( (msg.get("time").get("Sec"))*1000000+msg.get("time").get("USec"))
-
-        diff=str(msg.get("diff")) 
-        #s =["--", Id, dir_, typ, dlc, data,diff ]
-        s =[time, Id, data,diff ]
-        #dlc = msg.get("dlc")
+        s =["tTime", "direction", "format", "dlc", "data","diff" ]
+        
+        #s =[time, Id, direction, data,diff ]
+        data_string+="\n"+Id
         for part in s:
-            data_string+=part+";"
-        data_string+="\n"
+            data_string+=";"+str(msg.get(part))
 
-        #data_string +="--";+Id+";"+dir_+";"+typ+";"
-        #for  in stringArray:
-            
     with open(data_file_name ,"a") as loggingFile:
         loggingFile.write(data_string)
 
@@ -158,7 +151,26 @@ def RxEventCallback(index, DummyPointer, count):
             sec = raw_msg.Sec
             usec = raw_msg.USec
             dlc = raw_msg.Flags.FlagBits.DLC
+            tTime = sec*1000000+usec
 
+            #frame format
+            if raw_msg.Flags.FlagBits.RTR and raw_msg.Flags.FlagBits.EFF:
+                f_format = "EFF/RTR"
+            elif raw_msg.Flags.FlagBits.EFF:
+                f_format = "EFF"
+            elif raw_msg.Flags.FlagBits.RTR:
+                f_format = "STD/RTR"
+            else:
+                f_format = "STD"
+
+            #data direction
+            if raw_msg.Flags.FlagBits.TxD:
+                direction = "TX"
+            else:
+                direction = "RX"
+
+                
+            #data
             data =""
             for i in range(dlc):
                 d = raw_msg.Data[i]
@@ -174,7 +186,10 @@ def RxEventCallback(index, DummyPointer, count):
             #dataArray.append(string)
 
             cached_msg = {
+            "tTime" : tTime,
             "data":data,
+            "format" :f_format,
+            "direction":direction,
             "diff":0,
             "time":{
                 "Sec":sec,
