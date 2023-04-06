@@ -76,7 +76,7 @@ def formatMessage(message):
 
 
 def saveMessageArray(stringArray):
-    with open(dataFileName,"a") as loggingFile:
+    with open(data_file_name ,"a") as loggingFile:
         for line in stringArray:
             loggingFile.write(line)
 
@@ -103,10 +103,10 @@ def StatusEventCallback(index,deviceStatusPointer):
 
 def RxEventCallback(index, DummyPointer, count):
     log("RxEvent Index{0}".format(index))
-    res = canDriver.CanReceive(count = 500)
+    res = can_driver.CanReceive(count = 500)
     
     if res[0]>0:       
-        msgs = canDriver.FormatMessages(res[1])
+        msgs = can_driver.FormatMessages(res[1])
         dataArray=[]
         for msg in msgs:
             string=formatMessage(msg)
