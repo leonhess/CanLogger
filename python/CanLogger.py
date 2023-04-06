@@ -187,6 +187,7 @@ def RxEventCallback(index, DummyPointer, count):
 
             cached_msg = {
             "tTime" : tTime,
+            "dlc" :dlc,
             "data":data,
             "format" :f_format,
             "direction":direction,
