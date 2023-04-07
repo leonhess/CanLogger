@@ -176,9 +176,9 @@ def RxEventCallback(index, DummyPointer, count):
                 d = raw_msg.Data[i]
                 hexD = hex(d)[2:]
                 if d <16:
-                    data+="0"+hexD
+                    data="0"+hexD+" "+data
                 else:
-                    data+=hexD
+                    data=hexD+" "+data
 
             Id = hex(raw_msg.Id)[2:]
             #print("- {}--{}.{}   {}".format(Id,str(sec),usec,data))
