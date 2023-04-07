@@ -128,6 +128,7 @@ def map_data_to_signal(signal, data):
 def map_data_to_frame(frame, data):
     decoded_frame = {}
     #convert hex data to integer
+    data = data.replace(" ","") 
     print("hex ", data)
     data = int(str(data),16)
     print("dec ", data)
@@ -161,7 +162,7 @@ def map_data_to_frame(frame, data):
 #read dbc in dicct
 dbc_structure = read_dbc("PDB_C2021.dbc")
 #print(dbc_structure)
-log_file = open("20230407_001003_DATA_0.txt","r")
+log_file = open("20230407_153701_DATA_0.txt","r")
 
 
 #iterate through data file
@@ -176,6 +177,7 @@ for line_number, logfile_line in enumerate(log_file):
     msg_type = log_data[3] 
     dlc = log_data[4]
     data = str(log_data[5])
+    print(data)
     diff = log_data[6]
     frame= dbc_structure.get(str(canID))
     decoded_frame = map_data_to_frame(frame, data)
