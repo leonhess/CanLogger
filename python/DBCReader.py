@@ -166,11 +166,9 @@ def map_log_file(file_name,dbc):
         data = str(log_data[5])
         #print(data)
         diff = log_data[6]
-        frame= dbc_structure.get(str(canID))
+        frame= dbc.get(str(canID))
         decoded_frame = map_data_to_frame(frame, data)
         #print(decoded_frame)
-
-    log_file.close()
 
 
 
@@ -185,8 +183,7 @@ def map_log_file(file_name,dbc):
 #read dbc in dicct
 dbc_structure = read_dbc("PDB_C2021.dbc")
 #print(dbc_structure)
-log_file = open("20230407_153701_DATA_0.txt","r")
-
+map_log_file("20230407_153701_DATA_0.txt",dbc_structure)
 
    
 
