@@ -137,7 +137,6 @@ def map_data_to_frame(frame, data):
         print(signal)
         mapped_data = map_data_to_signal(frame.get("signals").get(signal), data)
         print(signal,mapped_data)
-        time.sleep(1)
         decoded_signal = {
                 "data" : mapped_data,
                "unit" : frame.get("signals").get(signal).get("unit")
@@ -148,6 +147,30 @@ def map_data_to_frame(frame, data):
             })
     #print(decoded_frame)
     return decoded_frame
+
+
+
+def map_log_file(file_name,dbc):
+    log_file = open(file_name)
+    #iterate through data file
+    for line_number, logfile_line in enumerate(log_file):
+    
+        logfile_line = re.sub("\n","",str(logfile_line))
+        log_data = logfile_line.split(";")
+        #read in the information of the logged msg
+        timestamp= log_data[1]
+        canID = log_data[0]
+        direction = log_data[2]
+        msg_type = log_data[3] 
+        dlc = log_data[4]
+        data = str(log_data[5])
+        #print(data)
+        diff = log_data[6]
+        frame= dbc_structure.get(str(canID))
+        decoded_frame = map_data_to_frame(frame, data)
+        #print(decoded_frame)
+
+    log_file.close()
 
 
 
@@ -165,23 +188,6 @@ dbc_structure = read_dbc("PDB_C2021.dbc")
 log_file = open("20230407_153701_DATA_0.txt","r")
 
 
-#iterate through data file
-for line_number, logfile_line in enumerate(log_file):
-    
-    logfile_line = re.sub("\n","",str(logfile_line))
-    log_data = logfile_line.split(";")
-    #read in the information of the logged msg
-    timestamp= log_data[1]
-    canID = log_data[0]
-    direction = log_data[2]
-    msg_type = log_data[3] 
-    dlc = log_data[4]
-    data = str(log_data[5])
-    print(data)
-    diff = log_data[6]
-    frame= dbc_structure.get(str(canID))
-    decoded_frame = map_data_to_frame(frame, data)
-    #print(decoded_frame)
    
 
 
