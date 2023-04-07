@@ -85,12 +85,21 @@ def read_dbc(file = "CANoe_C23.dbc"):
 
 
 def map_data_to_signal(signal, data):
-        print("signal {}".format(signal))
+        #print("signal {}".format(signal))
         start_bit=int(signal.get("start_bit"))
         length=int(signal.get("length"))
         scale=float(signal.get("scale"))
         offset=float(signal.get("offset"))
         unit=str(signal.get("unit"))
+        endinanes = str(signal.get("endinanes"))
+
+        if endinanes == "1":
+            #@1-> little endinanes/intel
+            real_bit_start = start_bit
+        else:
+            #@0 -> big endinanes/motorla
+            real_bit_start = start_bit-length
+
        # print("stat:{}, length :{}, scale:{}, offset:{}, unit:{}, data:{}".format(start_bit,length,scale,offset,unit,data))
         #get the concrete values of each signal
                    
@@ -99,10 +108,10 @@ def map_data_to_signal(signal, data):
         for i in range(length):
             bitmask=(bitmask<<1)|1
 
-        for i in range(start_bit):
+        for i in range(real_bit_start):
             bitmask=bitmask<<1
-        print("Maks",bin(data))
-        print("MASK",bin(bitmask))
+        #print("Maks",bin(data))
+        #print("MASK",bin(bitmask))
 
         masked_value=data&bitmask
         backshifted_value =masked_value>>start_bit
@@ -120,7 +129,7 @@ def map_data_to_signal(signal, data):
         #signal_containers.update({
         #    signal_name:signal_container
         #    })
-        print(value)
+        #print(value)
         return value
 
 
