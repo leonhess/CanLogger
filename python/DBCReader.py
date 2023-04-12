@@ -85,13 +85,14 @@ def read_dbc(file = "CANoe_C23.dbc"):
 
 
 def map_data_to_signal(signal, data):
-        #print("signal {}".format(signal))
+        print("signal {}".format(signal))
         start_bit=int(signal.get("start_bit"))
         length=int(signal.get("length"))
         scale=float(signal.get("scale"))
         offset=float(signal.get("offset"))
         unit=str(signal.get("unit"))
         endinanes = str(signal.get("endinanes"))
+        print("Signal parameter {},{},{},{}".format(start_bit,length,scale,offset,unit,endinanes))
 
         if endinanes == "1":
             #@1-> little endinanes/intel
@@ -105,18 +106,19 @@ def map_data_to_signal(signal, data):
                    
         #create a bitmask while shifting with 1 and orring with
         bitmask=0
+        print("real bit start {}".format(real_bit_start))
         for i in range(length):
             bitmask=(bitmask<<1)|1
 
         for i in range(real_bit_start):
             bitmask=bitmask<<1
-        #print("Maks",bin(data))
-        #print("MASK",bin(bitmask))
+        print("Maks",bin(data))
+        print("MASK",bin(bitmask))
 
         masked_value=data&bitmask
         backshifted_value =masked_value>>start_bit
-        #print("maskedvalue", bin(masked_value))
-        #print("maskedvalue", bin(backshifted_value))
+        print("maskedvalue", bin(masked_value))
+        print("maskedvalue", bin(backshifted_value))
         #scale value and offset
 
         value=backshifted_value*scale+offset
@@ -135,6 +137,7 @@ def map_data_to_signal(signal, data):
 
 
 def map_data_to_frame(frame, data):
+    #print("MAP data {},to frame{}".format(data,frame))
     decoded_frame = {}
     #convert hex data to integer
     data = data.replace(" ","") 
@@ -143,9 +146,10 @@ def map_data_to_frame(frame, data):
     #print("dec ", data)
     #iterate through all signals in this frame
     for signal in frame.get("signals"):
-        #print(signal)
+
+        print("signal {}".format(signal))
         mapped_data = map_data_to_signal(frame.get("signals").get(signal), data)
-        #print(signal,mapped_data)
+        #print(signal,mapped_data
         decoded_signal = {
                 "data" : mapped_data,
                "unit" : frame.get("signals").get(signal).get("unit")
@@ -166,31 +170,38 @@ def map_log_file(file_name,dbc):
     log_file = open(file_name)
     #iterate through data file
     for line_number, logfile_line in enumerate(log_file):
-    
-        logfile_line = re.sub("\n","",str(logfile_line))
-        log_data = logfile_line.split(";")
-        #read in the information of the logged msg
-        timestamp= log_data[1]
-        canID = log_data[0]
-        direction = log_data[2]
-        msg_type = log_data[3] 
-        dlc = log_data[4]
-        data = str(log_data[5])
-        #print(data)
-        diff = log_data[6]
-        frame= dbc.get(str(canID))
-        decoded_frame = map_data_to_frame(frame, data)
+        if line_number == 0:
+            pass
+        else:
+            print(line_number)
+            print("----------line------------")
+            print(logfile_line) 
+            logfile_line = re.sub("\n","",str(logfile_line))
+            print(logfile_line)
+            log_data = logfile_line.split(";")
+            print(log_data)
+            #read in the information of the logged msg
+            timestamp= log_data[1]
+            canID = log_data[0]
+            direction = log_data[2]
+            msg_type = log_data[3] 
+            dlc = log_data[4]
+            data = str(log_data[5])
+            print(data)
+            diff = log_data[6]
+            frame= dbc.get(str(canID))
+            decoded_frame = map_data_to_frame(frame, data)
 
-        decoded_string+=logfile_line+"<<<<"
-        for signal_name in decoded_frame:
-            data = decoded_frame.get(signal_name).get("data")
-            unit = decoded_frame.get(signal_name).get("unit")
-            decoded_string += "{"+signal_name+":"+str(data)+":"+unit+"}"
-        decoded_string+="\n"
-    print(decoded_string)
+            decoded_string+=logfile_line+"<<<<"
+            for signal_name in decoded_frame:
+                data = decoded_frame.get(signal_name).get("data")
+                unit = decoded_frame.get(signal_name).get("unit")
+                decoded_string += "{"+signal_name+":"+str(data)+":"+unit+"}"
+            decoded_string+="\n"
+            print(decoded_string)
 
-    with open("files/testdbc_map.txt","w") as dbc_map_file:
-         dbc_map_file.write(decoded_string)
+            with open("files/testdbc_map.txt","w") as dbc_map_file:
+                dbc_map_file.write(decoded_string)
 
 
 
@@ -206,9 +217,9 @@ def map_log_file(file_name,dbc):
 ##########################################
 
 #read dbc in dicct
-dbc_structure = read_dbc("files/PDB_C2021.dbc")
-#print(dbc_structure)
-map_log_file("files/20230407_153701_DATA_0.txt",dbc_structure)
+dbc_structure = read_dbc("files/CANoe_C23.dbc")
+print(dbc_structure)
+map_log_file("files/20230412_174933_DATA_0.txt",dbc_structure)
 
    
 
