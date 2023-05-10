@@ -217,6 +217,19 @@ def RxEventCallback(index, DummyPointer, count):
 
 
 
+def sendLoraFrame(ID_can_frame,data):
+    id_int=int(ID_can_frame,16)
+    print(data)
+    data = data.split(" ")
+    data_int=[]
+    print("loop")
+    for i in data:
+        print(i)
+        if i is not "":
+            data_int.append(int(i,16))
+          #  print("test{}".format(i))
+
+    print(data_int)
 
 
 #######################################################################
@@ -268,7 +281,7 @@ try:
             diff = m.get("diff")
             data = m.get("data")
             data_string+="{}:{}  {}\n".format(msg,diff,data)
-        
+            sendLoraFrame(msg,data) 
         print(data_string)
 except KeyboardInterrupt:
     log("[KeyboardInterrupt]")
