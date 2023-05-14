@@ -11,9 +11,13 @@ from baseOptionParser import BaseOptionParser
 
 from datetime import datetime
 from os.path import exists
+
+#import loraModul as LoraExample
+import sx126x as LoraLib
 log_file_name = None
 data_file_name = None
 dynamic_file_path="files/"
+node = None
 
 
 def log(msg, f_print=0):
@@ -214,6 +218,14 @@ def RxEventCallback(index, DummyPointer, count):
     #return 0
 
 
+#######################################################################
+#######################################################################
+#####LORA#############################################################
+#######################################################################
+
+def init_Lora():   
+    node = sx126x.sx126x(serial_num = "/dev/ttSerial0",freq=868,addr=0,power=22,rssi=True,air_speed=2400,relay=False)
+    
 
 
 
@@ -227,8 +239,7 @@ def sendLoraFrame(ID_can_frame,data):
         print(i)
         if i is not "":
             data_int.append(int(i,16))
-          #  print("test{}".format(i))
-
+          #  print("test{}".format(i)) 
     print(data_int)
 
 
@@ -271,6 +282,9 @@ can_driver.CanSetUpEvents(PnPEventCallbackfunc=PnPEventCallback,
                           StatusEventCallbackfunc=StatusEventCallback,
                           RxEventCallbackfunc=RxEventCallback)
 log("callbacks registered")
+
+#loraModul
+init_Lora()
 
 try:
     while True:
