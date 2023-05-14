@@ -237,7 +237,7 @@ def sendLoraFrame(ID_can_frame,data):
     print("loop")
     for i in data:
         print(i)
-        if i is not "":
+        if i != "":
             data_int.append(int(i,16))
           #  print("test{}".format(i)) 
     print(data_int)
