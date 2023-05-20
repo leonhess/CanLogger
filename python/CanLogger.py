@@ -13,7 +13,7 @@ from datetime import datetime
 from os.path import exists
 
 #import loraModul as LoraExample
-import sx126x as LoraLib
+import sx126x
 log_file_name = None
 data_file_name = None
 dynamic_file_path="files/"
@@ -224,7 +224,7 @@ def RxEventCallback(index, DummyPointer, count):
 #######################################################################
 
 def init_Lora():   
-    node = sx126x.sx126x(serial_num = "/dev/ttSerial0",freq=868,addr=0,power=22,rssi=True,air_speed=2400,relay=False)
+    node = sx126x.sx126x(serial_num = "/dev/serial0",freq=868,addr=0,power=22,rssi=True,air_speed=2400,relay=False)
     
 
 
@@ -290,13 +290,14 @@ try:
     while True:
         time.sleep(0.100)
         data_string = ""
+        print("test\n")
         for msg in compare_msgs:
             m = compare_msgs.get(msg)
             diff = m.get("diff")
             data = m.get("data")
             data_string+="{}:{}  {}\n".format(msg,diff,data)
-            sendLoraFrame(msg,data) 
-        print(data_string)
+            #sendLoraFrame(msg,data) 
+            #print(data_string)
 except KeyboardInterrupt:
     log("[KeyboardInterrupt]")
 
