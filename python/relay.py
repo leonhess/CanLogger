@@ -24,7 +24,7 @@ GPIO.output(M0,GPIO.LOW)
 GPIO.output(M1,GPIO.HIGH)
 time.sleep(1)
 
-ser = serial.Serial("/dev/ttyS0",9600)
+ser = serial.Serial("/dev/serial0",9600)
 ser.flushInput()
 try :
 	if ser.isOpen() :
