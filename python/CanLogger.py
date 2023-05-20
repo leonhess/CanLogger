@@ -296,7 +296,7 @@ try:
             diff = m.get("diff")
             data = m.get("data")
             data_string+="{}:{}  {}\n".format(msg,diff,data)
-            #sendLoraFrame(msg,data) 
+            sendLoraFrame(msg,data) 
             #print(data_string)
 except KeyboardInterrupt:
     log("[KeyboardInterrupt]")
