@@ -291,12 +291,14 @@ try:
         time.sleep(0.100)
         data_string = ""
         print("test\n")
+        node.send("test")
         for msg in compare_msgs:
             m = compare_msgs.get(msg)
             diff = m.get("diff")
             data = m.get("data")
             data_string+="{}:{}  {}\n".format(msg,diff,data)
             sendLoraFrame(msg,data) 
+
             #print(data_string)
 except KeyboardInterrupt:
     log("[KeyboardInterrupt]")
