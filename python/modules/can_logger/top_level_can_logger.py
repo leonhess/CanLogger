@@ -120,7 +120,7 @@ def RxEventCallback(index, DummyPointer, count):
             can_msg_nr : new_can_frame_data_string 
             })
         
-            save_cached_msgs(new_can_frame_data_string)
+            save_cached_msgs(msgs)
     else:
         fman.logFileManager.logEvent(can_driver.FormatError(0, 'CanReceive'))
             #return -1
