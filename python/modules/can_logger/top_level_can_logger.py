@@ -2,6 +2,7 @@ from .. import TinyCan as tiny_can
 
 can_driver =None
 
+
 #####################
 #######calbacks######
 #####################
@@ -83,7 +84,7 @@ def RxEventCallback(index, DummyPointer, count):
                 "USec":usec}
             }
 
-            cached_msg=get_diff_time(Id, cached_msg)
+            #cached_msg=get_diff_time(Id, cached_msg)
             
             cached_msgs.update({
             Id : cached_msg
