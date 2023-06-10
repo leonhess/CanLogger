@@ -1,6 +1,6 @@
 import os
 import modules
-
+import DBCReader
 
 init_mhs = 1
 
@@ -10,16 +10,20 @@ snr = None
 reconnect_attemps=10
 
 new_can_msg_rx =0
+current_frame_nr =0
+DBC_data={}
 
 
 def main():
+    global current_frame_nr
+    global DBC_data
     #check if the folder for log files exist
     if os.path.isdir("LOGS") ==0:
         os.mkdir("LOGS")
 
     #check if there is can device here
     modules.can_logger.top_level_can_logger.connect_tiny_can(baudrate,reconnect_attemps)
-
+    DBC_data=DBCReader.read_dbc()
 
     #if init_mhs==1:
     #    can_driver=modules.tiny_can.MhsTinyCanDriver()
@@ -29,6 +33,12 @@ def main():
 
     try:
         while True:
+            while modules.can_logger.top_level_can_logger.newData()==1:
+                #print(current_frame_nr)
+                dat =  modules.can_logger.top_level_can_logger.read_buffered_can_frame_dicct_by_nr(current_frame_nr) 
+                # print("data = {}".format(dat)) 
+                if dat:
+                    current_frame_nr+=1
             if new_can_msg_rx:
                 pass
     except KeyboardInterrupt:
