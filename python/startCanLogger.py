@@ -19,10 +19,13 @@ def main():
         os.mkdir("LOGS")
 
     #check if there is can device here
-    if init_mhs==1:
-        can_driver=modules.tiny_can.MhsTinyCanDriver()
-        if can_driver !=1:
-            print("Tiny Can not found\n")
+    modules.can_logger.top_level_can_logger.connect_tiny_can(baudrate,reconnect_attemps)
+
+
+    #if init_mhs==1:
+    #    can_driver=modules.tiny_can.MhsTinyCanDriver()
+    #    if can_driver !=1:
+    #        print("Tiny Can not found\n")
     #write logging
 
     try:
@@ -31,6 +34,8 @@ def main():
                 pass
     except KeyboardInterrupt:
         modules.logFileManager.logEvent("Keyboard")
+
+
 
 if __name__ =="__main__":
   main()
