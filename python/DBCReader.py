@@ -6,9 +6,11 @@ import time
 # select a dbcfile and a datalogging file
 
 def read_dbc(file = "CANoe_C23.dbc"):
-    with open(file,"r") as dbc_handle:
+    print("dbc reader")
+    with open(file,"r",errors='ignore') as dbc_handle:
         dbc_file = dbc_handle.read()
-
+    print(dbc_file)
+    print("test")
    
 
     frames = {}
@@ -17,9 +19,10 @@ def read_dbc(file = "CANoe_C23.dbc"):
     current_frame_id = None
     signal_counter = 0 
     current_signal_name = None
-
+    print(dbc_file)
     #iterate through each line in DBC file
     for dbc_line in dbc_file.split("\n"):
+        print(dbc_line)
         dbc_line = dbc_line.lstrip()
 
         #detech new frame block
@@ -216,10 +219,10 @@ def map_log_file(file_name,dbc):
 ###########################################
 ##########################################
 
-#read dbc in dicct
-dbc_structure = read_dbc("files/CANoe_C23.dbc")
-print(dbc_structure)
-map_log_file("files/20230412_174933_DATA_0.txt",dbc_structure)
+##read dbc in dicct
+#dbc_structure = read_dbc("files/CANoe_C23.dbc")
+#print(dbc_structure)
+#map_log_file("files/20230412_174933_DATA_0.txt",dbc_structure)
 
    
 
