@@ -1,14 +1,16 @@
 from .. import TinyCan as tiny_can
 
+can_driver =None
 
 #####################
 #######calbacks######
 #####################
 
 def PnPEventCallback(index, status):
+    global can_driver
     if status:
-        canDriver.canDeviceOpen(index)
-        canDriver.startCanBus(index)
+        can_driver.canDeviceOpen(index)
+        can_driver.startCanBus(index)
         log("[Device connected]")
     else:
         log("[Device Disconnected]")
@@ -24,6 +26,7 @@ def StatusEventCallback(index,deviceStatusPointer):
 
 def RxEventCallback(index, DummyPointer, count):
     #log("RxEvent Index{0}".format(index))
+    global can_driver
     num_msg, raw_msgs = can_driver.CanReceive(count = 500)
     cached_msgs={} 
     if num_msg>0:       
@@ -118,6 +121,7 @@ def connect_api(can_driver,baudrate, snr=None, attempts=5):
 
 def connect_tiny_can(baudrate,reconnect_attemps):
     #initalize CanDriver
+    global can_driver
     can_driver=tiny_can.mhsTinyCanDriver.MhsTinyCanDriver()
     status = connect_api(can_driver,baudrate,attempts=reconnect_attemps)
     can_driver.CanSetUpEvents(PnPEventCallbackfunc=PnPEventCallback,
