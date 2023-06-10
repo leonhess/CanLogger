@@ -1,7 +1,18 @@
 import os
+import time as t
 from datetime import datetime
 
-log_file_name = "testLog.txt"
+
+def create_file(filename):
+    try:
+        with open(filename,'x') as f:
+            pass
+    except FileExistsError:
+        pass
+    
+
+
+
 
 def timestamp(format_=None):
      time = datetime.now()
@@ -13,28 +24,14 @@ def timestamp(format_=None):
 
 
 
-
-def create_file(filename):
-    with open(filename,'x') as f:
-        pass
-
-
-
-def log(msg,filename, mirror_terminal=0):
-    if os.path.isfile == False:
+def safe_write(msg, filename, mirror_terminal=0):
+    #check if file exist
+    if os.path.isfile("./"+filename) == False:
         create_file("LOGS/{}".format(filename))
-    
+    #try writingwith
     with open("LOGS/{}".format(filename),'a') as f:
         f.write("{}\n".format(msg))
 
     if mirror_terminal==1:
         print("{}".format(msg))
-
-
-
-def logEvent(msg):
-    msg = "{}: event = {}\n".format(timestamp(),msg)
-    log(msg,log_file_name)
-
-
 

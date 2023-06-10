@@ -21,7 +21,8 @@ def main():
     #check if there is can device here
     if init_mhs==1:
         can_driver=modules.tiny_can.MhsTinyCanDriver()
-        pass
+        if can_driver !=1:
+            print("Tiny Can not found\n")
     #write logging
 
     try:
@@ -29,7 +30,7 @@ def main():
             if new_can_msg_rx:
                 pass
     except KeyboardInterrupt:
-        modules.logger.logFileManager.logEvent("Keyboard")
+        modules.logFileManager.logEvent("Keyboard")
 
 if __name__ =="__main__":
   main()
