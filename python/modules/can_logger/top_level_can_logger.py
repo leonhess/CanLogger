@@ -4,6 +4,16 @@ from .. import file_manager as fman
 can_driver =None
 data_file_name ="dataFile.txt"
 
+can_msg_nr = 0
+buffered_can_frames={}
+
+
+def read_buffered_can_frame_dicct_by_nr(nr):
+    frame = buffered_can_frames.get(nr)
+    buffered_can_frames.pop(nr)
+    return frame
+
+
 
 def save_cached_msgs(msgs):
     global data_file_name
@@ -45,7 +55,55 @@ def StatusEventCallback(index,deviceStatusPointer):
     #log(can_driver.FormatCanDeviceStatus(deviceStatusPointer, deviceStatusPointer.CanStatus,deviceStatusPointer.FIfoStatus))
 
 
+def can_msg_to_dicct(raw_msg):
+     sec = raw_msg.Sec
+     usec = raw_msg.USec
+     dlc = raw_msg.Flags.FlagBits.DLC
+     tTime = sec*1000000+usec
+
+     #frame format
+    if raw_msg.Flags.FlagBits.RTR and raw_msg.Flags.FlagBits.EFF:
+        f_format = "EFF/RTR"
+    elif raw_msg.Flags.FlagBits.EFF:
+        f_format = "EFF"
+    elif raw_msg.Flags.FlagBits.RTR:
+        f_format = "STD/RTR"
+    else:
+        f_format = "STD"
+
+    #data direction
+    if raw_msg.Flags.FlagBits.TxD:
+        direction = "TX"
+    else:
+        direction = "RX"
+
+    data =""
+    for i in range(dlc):
+        d = raw_msg.Data[i]
+        hexD = hex(d)[2:]
+        if d <16:
+            data="0"+hexD+" "+data
+        else:
+            data=hexD+" "+data
+
+    Id = hex(raw_msg.Id)[2:]
+    cached_msg = {
+    "tTime" : tTime,
+    "dlc" :dlc,
+    "data":data,
+    "format" :f_format,
+    "direction":direction,
+    "diff":0,
+    "time":{
+        "Sec":sec,
+        "USec":usec}
+    }
+    return cached_msg 
+
+
 def RxEventCallback(index, DummyPointer, count):
+    global can_msg_nr
+    global buffered_can_frames
     #log("RxEvent Index{0}".format(index))
     global can_driver
     num_msg, raw_msgs = can_driver.CanReceive(count = 500)
@@ -55,65 +113,15 @@ def RxEventCallback(index, DummyPointer, count):
         dataArray=[]
         
         for raw_msg in raw_msgs:
-            sec = raw_msg.Sec
-            usec = raw_msg.USec
-            dlc = raw_msg.Flags.FlagBits.DLC
-            tTime = sec*1000000+usec
-
-            #frame format
-            if raw_msg.Flags.FlagBits.RTR and raw_msg.Flags.FlagBits.EFF:
-                f_format = "EFF/RTR"
-            elif raw_msg.Flags.FlagBits.EFF:
-                f_format = "EFF"
-            elif raw_msg.Flags.FlagBits.RTR:
-                f_format = "STD/RTR"
-            else:
-                f_format = "STD"
-
-            #data direction
-            if raw_msg.Flags.FlagBits.TxD:
-                direction = "TX"
-            else:
-                direction = "RX"
-
-                
-            #data
-            data =""
-            for i in range(dlc):
-                d = raw_msg.Data[i]
-                hexD = hex(d)[2:]
-                if d <16:
-                    data="0"+hexD+" "+data
-                else:
-                    data=hexD+" "+data
-
-            Id = hex(raw_msg.Id)[2:]
-            #print("- {}--{}.{}   {}".format(Id,str(sec),usec,data))
-            #string=formatMessage(msg)
-            #dataArray.append(string)
-
-            cached_msg = {
-            "tTime" : tTime,
-            "dlc" :dlc,
-            "data":data,
-            "format" :f_format,
-            "direction":direction,
-            "diff":0,
-            "time":{
-                "Sec":sec,
-                "USec":usec}
-            }
-
             #cached_msg=get_diff_time(Id, cached_msg)
             
-            cached_msgs.update({
-            Id : cached_msg
+            #append new data to dicct and save it 
+            new_can_frame_data_string = can_msg_to_dicct(raw_msg) 
+            buffered_can_frames.update({
+            can_msg_nr : new_can_frame_data_string 
             })
         
-        save_cached_msgs(cached_msgs)
-        for s in dataArray:
-            m = s.split(";")
-            #print(m[1])
+            save_cached_msgs(new_can_frame_data_string)
     else:
         fman.logFileManager.logEvent(can_driver.FormatError(0, 'CanReceive'))
             #return -1
