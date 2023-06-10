@@ -71,10 +71,10 @@ def can_msg_to_dicct(raw_msg):
      else:
         f_format = "STD"
 
-    #data direction
-    if raw_msg.Flags.FlagBits.TxD:
+     #data direction
+     if raw_msg.Flags.FlagBits.TxD:
         direction = "TX"
-    else:
+     else:
         direction = "RX"
 
     data =""
