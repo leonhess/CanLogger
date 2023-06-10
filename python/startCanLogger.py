@@ -12,7 +12,6 @@ reconnect_attemps=10
 new_can_msg_rx =0
 
 
-
 def main():
     #check if the folder for log files exist
     if os.path.isdir("LOGS") ==0:
@@ -38,6 +37,6 @@ def main():
 
 
 if __name__ =="__main__":
-  main()
+    main()
 
 

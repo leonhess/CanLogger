@@ -61,14 +61,14 @@ def can_msg_to_dicct(raw_msg):
      dlc = raw_msg.Flags.FlagBits.DLC
      tTime = sec*1000000+usec
 
-     #frame format
-    if raw_msg.Flags.FlagBits.RTR and raw_msg.Flags.FlagBits.EFF:
+     #frame formatif
+     if raw_msg.Flags.FlagBits.RTR and raw_msg.Flags.FlagBits.EFF:
         f_format = "EFF/RTR"
-    elif raw_msg.Flags.FlagBits.EFF:
+     elif raw_msg.Flags.FlagBits.EFF:
         f_format = "EFF"
-    elif raw_msg.Flags.FlagBits.RTR:
+     elif raw_msg.Flags.FlagBits.RTR:
         f_format = "STD/RTR"
-    else:
+     else:
         f_format = "STD"
 
     #data direction
