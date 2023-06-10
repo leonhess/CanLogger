@@ -1,0 +1,251 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_:
+
+
+BO_ 3221225472 VECTOR__INDEPENDENT_SIG_MSG: 0 Vector__XXX
+ SG_ nmot : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ B_clrdisttripsw_can : 0|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ LC_shift_rpm_2 : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ LC_shift_rpm_1 : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 900 UNUSED_EMS7_OUT: 8 Vector__XXX
+ SG_ CANDI_STINJVPARSENTENCE : 63|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ CANDI_UBATTEMS : 55|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ CANDI_DCMFV : 47|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ CANDI_BINJVDHDEVEE : 32|1@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ CANDI_SWTOFFCY202_1 : 33|1@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ CANDI_SWTOFFCY202_2 : 34|1@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ CANDI_BINJVDHDEVRQ : 38|1@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ CANDI_INJVBNKENBL : 23|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ CANDI_IHLD : 15|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ CANDI_IPICKUPMFV : 7|8@0+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1586 Sw_Bin_Volt_02: 8 Vector__XXX
+ SG_ ushiftrevsw_can : 24|8@1+ (0.02,0) [0|5.1] "V" Vector__XXX
+ SG_ ushiftntrlsw_can : 16|8@1+ (0.02,0) [0|5.1] "V" Vector__XXX
+ SG_ ushiftemgcysw_can : 8|8@1+ (0.02,0) [0|5.1] "V" Vector__XXX
+ SG_ uclmodesw_can : 0|8@1+ (0.02,0) [0|5.1] "V" Vector__XXX
+
+BO_ 1584 Sw_Bin_Volt_01: 8 Vector__XXX
+ SG_ uwetsw_can : 56|8@1+ (0.02,0) [0|5.1] "V" Vector__XXX
+ SG_ ustartsw_can : 48|8@1+ (0.02,0) [0|5.1] "V" Vector__XXX
+ SG_ upitspeedsw_can : 40|8@1+ (0.02,0) [0|5.1] "V" Vector__XXX
+ SG_ upacecarsw_can : 32|8@1+ (0.02,0) [0|5.1] "V" Vector__XXX
+ SG_ ulaunchsw_can : 24|8@1+ (0.02,0) [0|5.1] "V" Vector__XXX
+ SG_ ufuelressw_can : 16|8@1+ (0.02,0) [0|5.1] "V" Vector__XXX
+ SG_ uchressw_can : 8|8@1+ (0.02,0) [0|5.1] "V" Vector__XXX
+ SG_ ualssw_can : 0|8@1+ (0.02,0) [0|5.1] "V" Vector__XXX
+
+BO_ 1472 UNUSED_BREMSE_60: 8 Vector__XXX
+ SG_ ABS_Active : 29|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ AY1_Bremse60 : 48|16@1+ (0.00012742,-4.1768) [-4.1768|4.1736697] "" Vector__XXX
+ SG_ AX1_Bremse60 : 32|16@1+ (0.00012742,-4.1768) [-4.17529856|4.17517114] "" Vector__XXX
+ SG_ BLS : 24|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ EBD_Lamp : 30|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ ABS_Lamp : 31|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ P_Hz : 8|16@1- (0.0153,0) [-501.3504|501.3351] "bar" Vector__XXX
+ SG_ SwitchState : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1350 UNUSED_DI_BOX2_IN: 8 Vector__XXX
+ SG_ candi_binjvdiagresperr1 : 56|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ candi_binjvdiagresperr0 : 57|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ candi_binjvdiagspierr1 : 58|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ candi_binjvdiagspierr0 : 59|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ candi_ubattdi : 55|8@0+ (0.1,0) [0|25.5] "V" Vector__XXX
+ SG_ candi_injvdiagrxram12 : 47|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ candi_injvdiagrxram11 : 39|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ candi_injvdiagrxram10 : 31|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ candi_injvdiagrxram02 : 23|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ candi_injvdiagrxram01 : 15|8@0+ (1,0) [-128|127] "" Vector__XXX
+ SG_ candi_injvdiagrxram00 : 7|8@0+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1152 UNUSED_logl_01: 8 Vector__XXX
+ SG_ pitspeednom : 0|16@1+ (0.1,0) [0|6553.5] "km/h" Vector__XXX
+
+BO_ 1110 UNUSED_UNIV_1: 8 Vector__XXX
+ SG_ osuniv_in2 : 16|16@1- (1,0) [-32768|32767] "" Vector__XXX
+ SG_ osuniv_in1 : 0|16@1- (1,0) [-32768|32767] "" Vector__XXX
+
+BO_ 896 UNUSED_DI_BOX3_IN: 8 Vector__XXX
+ SG_ candi_bmfvspi2err : 56|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ candi_bmfvspi1err : 57|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ candi_bmfvid2err : 58|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ candi_bmfvid1err : 59|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ candi_bmfvinitsuc : 60|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ candi_bcanerr : 61|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ candi_mfvvalveerr2 : 55|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ candi_mfvvalveerr1 : 47|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ candi_injvhdevbpt : 39|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ candi_injvhdevpup : 24|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ candi_stinjvchkst1 : 23|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ candi_stinjvchkst0 : 15|8@0+ (1,0) [0|255] "" Vector__XXX
+ SG_ candi_stinjvic : 7|8@0+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 586 UNUSED_BREMSE_2: 8 Vector__XXX
+ SG_ WS_RR_Bremse2 : 48|16@1+ (0.015625,0) [0|1023.984375] "" Vector__XXX
+ SG_ WS_RL_Bremse2 : 32|16@1+ (0.015625,0) [0|1023.984375] "m/s" Vector__XXX
+ SG_ WS_FR_Bremse2 : 16|16@1+ (0.015625,0) [0|1023.984375] "m/s" Vector__XXX
+ SG_ WS_FL_Bremse2 : 0|16@1+ (0.015625,0) [0|1023.984375] "m/s" Vector__XXX
+
+BO_ 128 YRS02: 8 Vector__XXX
+ SG_ YRS3_Yaw_Angular_acceleration : 0|16@1- (0.125,0) [-4096|4095.875] "°/S^2" Vector__XXX
+ SG_ accx_CAN : 32|16@1+ (0.00012742,-4.1768) [-4.1768|4.1736697] "" Vector__XXX
+
+BO_ 112 YRS01: 8 Vector__XXX
+ SG_ accy_CAN : 32|16@1+ (0.00012742,-4.1768) [-4.1768|4.1736697] "g" Vector__XXX
+ SG_ yaw_rate_CAN : 0|16@1+ (0.005,-163.84) [-163.84|163.835] "deg/sec" Vector__XXX
+
+BO_ 1570 UNUSED_Sw_Rot_02: 8 Vector__XXX
+ SG_ wiperstage_can : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1568 Sw_Rot_01: 8 Vector__XXX
+ SG_ uboostsw_can : 56|8@1+ (0.02,0) [0|5.1] "V" Vector__XXX
+ SG_ boostsw_can : 48|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ utcsw_can : 40|8@1+ (0.02,0) [0|5.1] "V" Vector__XXX
+ SG_ tcsw_can : 32|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ ufuncsw_can : 24|8@1+ (0.02,0) [0|5.1] "V" Vector__XXX
+ SG_ funcsw_can : 16|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ umapsw_can : 8|8@1+ (0.02,0) [0|5.1] "V" Vector__XXX
+ SG_ mapsw_can : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 1552 Sw_Bin_fast_01: 8 Vector__XXX
+ SG_ uclpaddle2_can : 56|8@1+ (0.02,0) [0|5.1] "V" Vector__XXX
+ SG_ uclpaddle1_can : 48|8@1+ (0.02,0) [0|5.1] "V" Vector__XXX
+ SG_ ushiftdnsw_can : 40|8@1+ (0.02,0) [0|5.1] "V" Vector__XXX
+ SG_ ushiftupsw_can : 32|8@1+ (0.02,0) [0|5.1] "V" Vector__XXX
+ SG_ B_shiftdnsw_can : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_shiftupsw_can : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 256 PDB: 8 Vector__XXX
+ SG_ MS6_tmot : 48|8@1+ (1,-40) [-40|215] "°C" Vector__XXX
+ SG_ MS6_shutdown_close : 56|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MS6_fuelpump : 32|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MS6_brake_light : 24|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MS6_B_stend : 16|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MS6_B_nmot : 40|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MS6_B_E_etcdiff : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MS6_athlow : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ MS6_gear : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 1025 PDBCurrent2: 8 Vector__XXX
+ SG_ PDB_E_SC_closed : 41|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PDB_E_FanReInitialized : 40|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PDB_LPChannel_4 : 36|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PDB_LPChannel_3 : 35|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PDB_LPChannel_2 : 34|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PDB_LPChannel_1 : 33|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PDB_LPChannel_0 : 32|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PDB_PO6_FLAG : 22|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PDB_PO9_FLAG : 25|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PDB_PO1_FLAG : 17|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PDB_PO0_FLAG : 16|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PDB_PO8_FLAG : 24|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PDB_PO4_FLAG : 20|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PDB_P3_FLAG : 19|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PDB_PO2_FLAG : 18|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PDB_PO5_FLAG : 21|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PDB_PO7_FLAG : 23|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ current_PO9 : 8|8@1+ (0.039215,0) [0|9.999825] "" Vector__XXX
+ SG_ current_PO8 : 0|8@1+ (0.039215,0) [0|9.999825] "" Vector__XXX
+
+BO_ 1024 PDBCurrent: 8 Vector__XXX
+ SG_ current_PO0 : 0|8@1+ (0.039215,0) [0|9.999825] "" Vector__XXX
+ SG_ current_PO1 : 8|8@1+ (0.039215,0) [0|9.999825] "" Vector__XXX
+ SG_ current_PO2 : 16|8@1+ (0.039215,0) [0|9.999825] "" Vector__XXX
+ SG_ current_PO3 : 31|8@0+ (0.039215,0) [0|9.999825] "" Vector__XXX
+ SG_ current_PO4 : 32|8@1+ (0.039215,0) [0|9.999825] "" Vector__XXX
+ SG_ current_PO5 : 40|8@1+ (0.039215,0) [0|9.999825] "" Vector__XXX
+ SG_ current_PO6 : 48|8@1+ (0.039215,0) [0|9.999825] "" Vector__XXX
+ SG_ current_PO7 : 56|8@1+ (0.039215,0) [0|9.999825] "" Vector__XXX
+
+BO_ 1576 Sw_Bin_01: 8 Vector__XXX
+ SG_ B_wetsw_can : 6|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_startsw_can : 7|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_shiftrevsw_can : 24|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_shiftntrlsw_can : 25|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_shiftemgcysw_can : 26|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_pitspeedsw_can : 5|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_pacecarsw_can : 4|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_launchsw_can : 3|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_fuelressw_can : 2|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_clmodesw_can : 27|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_chressw_can : 1|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_alssw_can : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 1912 CockpitDisplay: 8 Vector__XXX
+ SG_ B_shiftind9 : 17|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_shiftind8 : 16|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_shiftind7 : 15|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_shiftind6 : 14|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_shiftind5 : 13|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_shiftind4 : 12|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_shiftind3 : 11|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_shiftind2 : 10|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_shiftind1 : 9|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_shiftind0 : 8|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_lc_upshift2 : 47|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ B_lc_upshift1 : 46|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ LC_BP_front : 43|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ LC_auto_shift_speed : 42|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ fuel_Low : 44|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ B_poilwarn : 40|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ B_launch : 42|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ B_lauchsw : 41|1@0+ (1,0) [0|0] "" Vector__XXX
+ SG_ tmot : 32|8@1+ (1,-40) [0|120] "" Vector__XXX
+ SG_ pfuel : 24|8@1+ (0.05,0) [0|12.75] "" Vector__XXX
+ SG_ gear : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+
+
+
+CM_ BO_ 3221225472 "This is a message for not used signals, created by Vector CANdb++ DBC OLE DB Provider.";
+BA_DEF_  "MultiplexExtEnabled" ENUM  "No","Yes";
+BA_DEF_  "BusType" STRING ;
+BA_DEF_ BU_  "NodeLayerModules" STRING ;
+BA_DEF_ BU_  "ECU" STRING ;
+BA_DEF_ BU_  "CANoeJitterMax" INT 0 0;
+BA_DEF_ BU_  "CANoeJitterMin" INT 0 0;
+BA_DEF_ BU_  "CANoeDrift" INT 0 0;
+BA_DEF_ BU_  "CANoeStartDelay" INT 0 0;
+BA_DEF_DEF_  "MultiplexExtEnabled" "No";
+BA_DEF_DEF_  "BusType" "";
+BA_DEF_DEF_  "NodeLayerModules" "";
+BA_DEF_DEF_  "ECU" "";
+BA_DEF_DEF_  "CANoeJitterMax" 0;
+BA_DEF_DEF_  "CANoeJitterMin" 0;
+BA_DEF_DEF_  "CANoeDrift" 0;
+BA_DEF_DEF_  "CANoeStartDelay" 0;
+
