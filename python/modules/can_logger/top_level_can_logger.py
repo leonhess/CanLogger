@@ -15,18 +15,16 @@ def read_buffered_can_frame_dicct_by_nr(nr):
 
 
 
-def save_cached_msgs(msgs):
+def save_cached_msgs(nr,can_frame_data):
     global data_file_name
     data_string=""
-    for msg in msgs:
-        Id = msg
-        msg = msgs.get(msg)
-        s =["tTime", "direction", "format", "dlc", "data","diff" ]
-        
-        #s =[time, Id, direction, data,diff ]
-        data_string+="\n"+Id
-        for part in s:
-            data_string+=";"+str(msg.get(part))
+    s =["tTime", "direction", "format", "dlc", "data","diff" ]
+    print(can_frame_data)    
+    #s =[time, Id, direction, data,diff ]
+    data_string+=can_frame_data.get("Id")
+    print(data_string)
+    for part in s:
+        data_string+=";"+str(can_frame_data.get(part))
     fman.general_file_functions.safe_write(data_string,data_file_name,mirror_terminal=1)
 
     with open(data_file_name ,"a") as loggingFile:
@@ -87,6 +85,7 @@ def can_msg_to_dicct(raw_msg):
             data=hexD+" "+data 
      Id = hex(raw_msg.Id)[2:]
      cached_msg = {
+     "Id" : Id,
      "tTime" : tTime,
      "dlc" :dlc,
      "data":data,
@@ -115,12 +114,13 @@ def RxEventCallback(index, DummyPointer, count):
             #cached_msg=get_diff_time(Id, cached_msg)
             
             #append new data to dicct and save it 
-            new_can_frame_data_string = can_msg_to_dicct(raw_msg) 
+            new_can_frame_data = can_msg_to_dicct(raw_msg) 
             buffered_can_frames.update({
-            can_msg_nr : new_can_frame_data_string 
+            can_msg_nr : new_can_frame_data 
             })
-        
-            save_cached_msgs(msgs)
+            print(buffered_can_frames)
+            save_cached_msgs(can_msg_nr, new_can_frame_data)
+            can_msg_nr+=1
     else:
         fman.logFileManager.logEvent(can_driver.FormatError(0, 'CanReceive'))
             #return -1
