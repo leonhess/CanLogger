@@ -77,15 +77,14 @@ def can_msg_to_dicct(raw_msg):
      else:
         direction = "RX"
 
-    data =""
-    for i in range(dlc):
+     data =""
+     for i in range(dlc):
         d = raw_msg.Data[i]
         hexD = hex(d)[2:]
         if d <16:
             data="0"+hexD+" "+data
         else:
-            data=hexD+" "+data
-
+            data=hexD+" "+data 
     Id = hex(raw_msg.Id)[2:]
     cached_msg = {
     "tTime" : tTime,
