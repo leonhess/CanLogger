@@ -1,6 +1,26 @@
 from .. import TinyCan as tiny_can
+from .. import file_manager as fman
 
 can_driver =None
+data_file_name ="dataFile.txt"
+
+
+def save_cached_msgs(msgs):
+    global data_file_name
+    data_string=""
+    for msg in msgs:
+        Id = msg
+        msg = msgs.get(msg)
+        s =["tTime", "direction", "format", "dlc", "data","diff" ]
+        
+        #s =[time, Id, direction, data,diff ]
+        data_string+="\n"+Id
+        for part in s:
+            data_string+=";"+str(msg.get(part))
+    fman.general_file_functions.safe_write(data_string,data_file_name,mirror_terminal=1)
+
+    with open(data_file_name ,"a") as loggingFile:
+        loggingFile.write(data_string)
 
 
 #####################
