@@ -115,7 +115,7 @@ def RxEventCallback(index, DummyPointer, count):
             m = s.split(";")
             #print(m[1])
     else:
-        fman.logFileManager.logEvent(can_driver.FormatError(res, 'CanReceive'))
+        fman.logFileManager.logEvent(can_driver.FormatError(0, 'CanReceive'))
             #return -1
     #return 0
 
