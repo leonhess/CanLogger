@@ -85,19 +85,19 @@ def can_msg_to_dicct(raw_msg):
             data="0"+hexD+" "+data
         else:
             data=hexD+" "+data 
-    Id = hex(raw_msg.Id)[2:]
-    cached_msg = {
-    "tTime" : tTime,
-    "dlc" :dlc,
-    "data":data,
-    "format" :f_format,
-    "direction":direction,
-    "diff":0,
-    "time":{
+     Id = hex(raw_msg.Id)[2:]
+     cached_msg = {
+     "tTime" : tTime,
+     "dlc" :dlc,
+     "data":data,
+     "format" :f_format,
+     "direction":direction,
+     "diff":0,
+     "time":{
         "Sec":sec,
         "USec":usec}
-    }
-    return cached_msg 
+     }
+     return cached_msg 
 
 
 def RxEventCallback(index, DummyPointer, count):
