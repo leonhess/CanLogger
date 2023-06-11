@@ -34,10 +34,11 @@ def main():
     try:
         while True:
             while modules.can_logger.top_level_can_logger.newData()==1:
-                #print(current_frame_nr)
                 dat =  modules.can_logger.top_level_can_logger.read_buffered_can_frame_dicct_by_nr(current_frame_nr) 
-                # print("data = {}".format(dat)) 
                 if dat:
+                    #print(dat)
+                    # print()
+                    DBCReader.convert_can_frame_to_signals(dat)
                     current_frame_nr+=1
             if new_can_msg_rx:
                 pass

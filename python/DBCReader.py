@@ -4,14 +4,11 @@ import re
 import time
 
 # select a dbcfile and a datalogging file
-
+frames = {}
 def read_dbc(file = "CANoe_C23.dbc"):
-    print("dbc reader")
+    global frames
     with open(file,"r",errors='ignore') as dbc_handle:
         dbc_file = dbc_handle.read()
-    print(dbc_file)
-    print("test")
-   
 
     frames = {}
     frame_counter = 0
@@ -19,10 +16,8 @@ def read_dbc(file = "CANoe_C23.dbc"):
     current_frame_id = None
     signal_counter = 0 
     current_signal_name = None
-    print(dbc_file)
     #iterate through each line in DBC file
     for dbc_line in dbc_file.split("\n"):
-        print(dbc_line)
         dbc_line = dbc_line.lstrip()
 
         #detech new frame block
@@ -88,14 +83,14 @@ def read_dbc(file = "CANoe_C23.dbc"):
 
 
 def map_data_to_signal(signal, data):
-        print("signal {}".format(signal))
+        # print("signal {}".format(signal))
         start_bit=int(signal.get("start_bit"))
         length=int(signal.get("length"))
         scale=float(signal.get("scale"))
         offset=float(signal.get("offset"))
         unit=str(signal.get("unit"))
         endinanes = str(signal.get("endinanes"))
-        print("Signal parameter {},{},{},{}".format(start_bit,length,scale,offset,unit,endinanes))
+        #print("Signal parameter {},{},{},{}".format(start_bit,length,scale,offset,unit,endinanes))
 
         if endinanes == "1":
             #@1-> little endinanes/intel
@@ -109,19 +104,19 @@ def map_data_to_signal(signal, data):
                    
         #create a bitmask while shifting with 1 and orring with
         bitmask=0
-        print("real bit start {}".format(real_bit_start))
+        #print("real bit start {}".format(real_bit_start))
         for i in range(length):
             bitmask=(bitmask<<1)|1
 
         for i in range(real_bit_start):
             bitmask=bitmask<<1
-        print("Maks",bin(data))
-        print("MASK",bin(bitmask))
+        #print("Maks",bin(data))
+        #print("MASK",bin(bitmask))
 
         masked_value=data&bitmask
         backshifted_value =masked_value>>start_bit
-        print("maskedvalue", bin(masked_value))
-        print("maskedvalue", bin(backshifted_value))
+        #print("maskedvalue", bin(masked_value))
+        #print("maskedvalue", bin(backshifted_value))
         #scale value and offset
 
         value=backshifted_value*scale+offset
@@ -139,7 +134,7 @@ def map_data_to_signal(signal, data):
 
 
 
-def map_data_to_frame(frame, data):
+def map_data_to_frame(DBCFrame, data):
     #print("MAP data {},to frame{}".format(data,frame))
     decoded_frame = {}
     #convert hex data to integer
@@ -148,14 +143,14 @@ def map_data_to_frame(frame, data):
     data = int(str(data),16)
     #print("dec ", data)
     #iterate through all signals in this frame
-    for signal in frame.get("signals"):
+    for signal in DBCFrame.get("signals"):
 
-        print("signal {}".format(signal))
-        mapped_data = map_data_to_signal(frame.get("signals").get(signal), data)
+        #print("signal {}".format(signal))
+        mapped_data = map_data_to_signal(DBCFrame.get("signals").get(signal), data)
         #print(signal,mapped_data
         decoded_signal = {
                 "data" : mapped_data,
-               "unit" : frame.get("signals").get(signal).get("unit")
+               "unit" : DBCFrame.get("signals").get(signal).get("unit")
         }
 
         decoded_frame.update({
@@ -164,6 +159,15 @@ def map_data_to_frame(frame, data):
     #print(decoded_frame)
     return decoded_frame
 
+
+def convert_can_frame_to_signals(can_frame):
+    global frames
+    DBCFrame = frames.get(can_frame.get("Id"))
+    # print("---------------------------------------\n------------------{}".format(can_frame))
+    data = can_frame.get("data")
+    # print("dbc = {}\n\n data = {}".format(DBCFrame,data))
+    signals=map_data_to_frame(DBCFrame,data) 
+    return signals
 
 
 def map_log_file(file_name,dbc):
