@@ -31,10 +31,9 @@ def update_graph(value):
     dff = df[df.ID==value]
     return px.line(dff,x="TIME",y="DIFF")
 
-
-
-
-
-if __name__ == '__main__':
+def run_flask():
     app.run_server(debug=True)
 
+
+__name__ == '__main__':
+    run_flask()
